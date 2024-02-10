@@ -5,6 +5,10 @@
     <CanvasDraw />
     <h2>Canvas Gradient</h2>
     <CanvasGradient />
+    <h2>Pixi Basic</h2>
+    <client-only>
+      <PixiBasic />
+    </client-only>
   </div>
 </template>
 
