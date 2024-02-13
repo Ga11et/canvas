@@ -2,8 +2,6 @@
   <canvas
     class="canvas-draw"
     ref="canvas"
-    width="1000"
-    height="300"
     @mousemove="mouseDownHandler"
     @mousedown="drowingData.draw = true"
     @mouseup="drowingData.draw = false"
@@ -22,6 +20,8 @@ const drowingData = reactive({
 
 onMounted(() => {
   drowingData.ctx = canvas.value.getContext("2d");
+  canvas.value.width = window.innerWidth;
+  canvas.value.height = window.innerHeight;
 });
 
 const mouseDownHandler = (e) => {

@@ -8,14 +8,14 @@
 import { Sprite, Texture } from "pixi.js";
 import { onTick, Application } from "vue3-pixi";
 
-const width = 1000;
-const height = 500;
+const width = window.innerWidth;
+const height = window.innerHeight;
 const speed = 1;
 
 const fov = 20;
 const starSize = 0.005;
 
-const amount = ref(1e3);
+const amount = ref(4000);
 const containerRef = ref();
 
 let camera = 0;
@@ -40,7 +40,7 @@ function updateStars() {
   stars = new Array(+amount.value).fill(null).map(() => {
     const star = new Sprite(Texture.from("/png/star.png"));
     const deg = Math.random() * Math.PI * 2;
-    const distance = Math.random() * 100 + 1;
+    const distance = Math.random() * 50 + 1;
 
     star.initX = Math.cos(deg) * distance;
     star.initY = Math.sin(deg) * distance;
@@ -54,6 +54,8 @@ function updateStars() {
 
     return star;
   });
+
+  console.log(stars.length);
 
   containerRef.value.addChild(...stars);
 }
@@ -71,10 +73,10 @@ function updateStar(star) {
 
 const correctStarByMouse = (star, ind) => {
   const distance = Math.sqrt(Math.pow(star.x - mouseData.x, 2) + Math.pow(star.y - mouseData.y, 2));
-  const isNearly = distance <= 50;
+  const isNearly = distance <= 80;
   if (isNearly) {
-    star.x += sign(star.x - mouseData.x) * ((50 - distance) / 8);
-    star.y += sign(star.y - mouseData.y) * ((50 - distance) / 8);
+    star.x += sign(star.x - mouseData.x) * ((80 - distance) / 8);
+    star.y += sign(star.y - mouseData.y) * ((80 - distance) / 8);
   } else {
     const notCorrectPosition = Math.sqrt(
       Math.pow(star.x - mouseData.fixedStars[ind].x, 2) + Math.pow(star.y - mouseData.fixedStars[ind].y, 2)

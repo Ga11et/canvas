@@ -11,7 +11,8 @@ const drowingData = reactive({
 
 onMounted(() => {
   drowingData.ctx = canvas.value.getContext("2d");
-  console.log(drowingData.ctx);
+  canvas.value.width = window.innerWidth;
+  canvas.value.height = window.innerHeight;
 });
 
 const mouseMoveHandler = (e) => {
@@ -19,10 +20,10 @@ const mouseMoveHandler = (e) => {
 };
 const rerenderGradient = (x, y) => {
   const ctx = drowingData.ctx;
-  const width = 1200;
+  const width = window.innerWidth * 1.2;
 
   ctx.fillStyle = `rgb(256,256,256)`;
-  ctx.fillRect(0, 0, 1000, 1000);
+  ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
   drawCircle(x, y, width);
 };
