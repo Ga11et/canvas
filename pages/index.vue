@@ -2,6 +2,7 @@
   <div>
     <CanvasDraw />
     <CanvasGradient />
+    <CanvasPicture />
     <client-only>
       <PixiBasic />
     </client-only>

@@ -55,8 +55,6 @@ function updateStars() {
     return star;
   });
 
-  console.log(stars.length);
-
   containerRef.value.addChild(...stars);
 }
 
