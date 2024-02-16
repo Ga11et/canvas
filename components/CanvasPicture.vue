@@ -17,7 +17,7 @@ const drawImage = (image64) => {
   imageElement.setAttribute("src", image64);
 
   const ctx = canvasState.ctx;
-  canvasState.picture = new pictureUtils.Picture(window, imageElement, 30);
+  canvasState.picture = new pictureUtils.Picture(window, imageElement, 15);
   canvasState.picture.init(ctx);
   animateImage();
 };

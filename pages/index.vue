@@ -1,10 +1,18 @@
 <template>
   <div>
-    <CanvasDraw />
-    <CanvasGradient />
-    <CanvasPicture />
+    <BaseObserverBlock>
+      <CanvasDraw />
+    </BaseObserverBlock>
+    <BaseObserverBlock>
+      <CanvasGradient />
+    </BaseObserverBlock>
+    <BaseObserverBlock>
+      <CanvasPicture />
+    </BaseObserverBlock>
     <client-only>
-      <PixiBasic />
+      <BaseObserverBlock>
+        <PixiBasic />
+      </BaseObserverBlock>
     </client-only>
   </div>
 </template>

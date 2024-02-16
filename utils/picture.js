@@ -13,21 +13,33 @@ export const pictureUtils = {
       this.vx = 0;
       this.vy = 0;
       this.ease = 0.1;
+
+      this.dx = 0;
+      this.dy = 0;
+      this.fraction = 0.9;
+      this.distance = 0;
+      this.force = 0;
+      this.angle = 0;
     }
     draw(ctx) {
       ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, this.size, this.size);
     }
     update(mouse) {
-      const distance = Math.sqrt(Math.pow(mouse.x - this.originX, 2) + Math.pow(mouse.y - this.originY, 2));
-      const isNearly = distance <= mouse.r;
-      if (isNearly) {
-        this.x += (this.x - mouse.x) * 0.5;
-        this.y += (this.y - mouse.y) * 0.5;
-      } else {
-        this.x += (this.originX - this.x) * this.ease;
-        this.y += (this.originY - this.y) * this.ease;
+      this.dx = mouse.x - this.x;
+      this.dy = mouse.y - this.y;
+
+      this.distance = this.dx * this.dx + this.dy * this.dy;
+      this.force = (mouse.r / this.distance) * -1;
+
+      if (this.distance < mouse.r) {
+        this.angle = Math.atan2(this.dy, this.dx);
+        this.vx += this.force * Math.cos(this.angle);
+        this.vy += this.force * Math.sin(this.angle);
       }
+
+      this.x += (this.vx *= this.fraction) + (this.originX - this.x) * this.ease;
+      this.y += (this.vy *= this.fraction) + (this.originY - this.y) * this.ease;
     }
   },
 
@@ -47,7 +59,7 @@ export const pictureUtils = {
       this.gap = gap;
 
       this.mouse = {
-        r: 80,
+        r: 8000,
         x: null,
         y: null,
       };
@@ -86,5 +98,3 @@ export const pictureUtils = {
     }
   },
 };
-
-const sign = (x) => (x >> 31) | 1;
