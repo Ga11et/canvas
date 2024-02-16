@@ -52,8 +52,10 @@ export const pictureUtils = {
         y: null,
       };
       window.addEventListener("mousemove", (e) => {
-        this.mouse.x = e.offsetX;
-        this.mouse.y = e.offsetY;
+        if (e.target.classList.contains("canvas-picture")) {
+          this.mouse.x = e.offsetX;
+          this.mouse.y = e.offsetY;
+        }
       });
     }
     init(ctx) {
