@@ -14,6 +14,12 @@
         <PixiBasic />
       </BaseObserverBlock>
     </client-only>
+
+    <client-only>
+      <BaseObserverBlock>
+        <PixiGGradient />
+      </BaseObserverBlock>
+    </client-only>
   </div>
 </template>
 

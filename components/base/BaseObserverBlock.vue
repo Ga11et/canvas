@@ -14,7 +14,6 @@ onMounted(() => {
   observer.value = new IntersectionObserver(
     (entries) => {
       entries.forEach(({ isIntersecting }) => {
-        console.log(isIntersecting);
         if (isIntersecting) {
           intersecting.value = true;
         } else {
