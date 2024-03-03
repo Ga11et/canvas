@@ -1,8 +1,6 @@
 import * as PIXI from "pixi.js";
 
 const fragShader = `
-  precision mediump float;
-
   uniform vec2  res;
   uniform float time;
   uniform vec2  mouse;
@@ -21,28 +19,24 @@ const fragShader = `
   uniform vec4 dimensions;
   uniform vec4 filterArea;
 
-  uniform vec3 colorA; // vec3(22.0/255.0, 37.0/255.0, 75.0/255.0);
-  uniform vec3 colorB; // vec3(35.0/255.0, 65.0/255.0, 138.0/255.0);
-  uniform vec3 colorC; // vec3(170.0/255.0, 223.0/255.0, 217.0/255.0);
-  uniform vec3 colorD; // vec3(230.0/255.0, 79.0/255.0, 15.0/255.0);
-  const int grads = 4 - 1;
+  uniform vec3 colorA;
+  uniform vec3 colorB;
+  uniform vec3 colorC;
+  uniform vec3 colorD;
+  const int grads = 3;
 
   const float Pi = 3.14159;
-
-  float mixValues(float v1, float v2, float k) {
-    return min(1.0, v1*k + v2*(1.0 - k));
-  }
 
   vec3 mixColor(vec3 c1, vec3 c2, float start, float end, float position) {
     float k = (position - start) / (end - start);
     return vec3(
-      mixValues(c1.x, c2.x, 1.0 - k),
-      mixValues(c1.y, c2.y, 1.0 - k),
-      mixValues(c1.z, c2.z, 1.0 - k)
+      min(1.0, c1.x*(1.0 - k) + c2.x*k),
+      min(1.0, c1.y*(1.0 - k) + c2.y*k),
+      min(1.0, c1.z*(1.0 - k) + c2.z*k)
     );
   }
 
-  void main(void) {
+  void main() {
     vec2 coord = vec2(gl_FragCoord.x / res.x, gl_FragCoord.y / res.y);
     coord.y -= pow(mouse.x*mouseFactorX*sin(xFactor*mouse.y*Pi*coord.x), 1.0);
     coord.x -= pow(mouse.y*mouseFactorY*cos(yFactor*mouse.x*Pi*coord.y), 1.0);
@@ -74,10 +68,9 @@ const cssColorToVec3 = (cssColor) => {
 /** Фильрт искажённого градиента
  * @param {Number} width Ширина области в пикселях
  * @param {Number} height Высота области в пикселях
- * @param {Object} options Парамтеры фильтра
  */
 class GradientFilter extends PIXI.Filter {
-  constructor(width, height, options) {
+  constructor(width, height) {
     super(null, fragShader);
     this.uniforms.invert = false;
     this.uniforms.rColor = 1;
@@ -96,11 +89,6 @@ class GradientFilter extends PIXI.Filter {
     this.uniforms.mouseDelay = 10;
     this.uniforms.noise = 10;
     this.uniforms.noiseSeed = 10;
-    if (options)
-      Object.keys(options).forEach((key) => {
-        if (this.uniforms[key]) this.uniforms[key] = options[key];
-      });
-    // this.uniforms.mouse = new PIXI.Point();
     this.uniforms.res = new PIXI.Point(width, height);
   }
 

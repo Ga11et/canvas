@@ -22,6 +22,8 @@ const drawImage = (image64) => {
   animateImage();
 };
 const animateImage = () => {
+  if (!canvas.value) return;
+
   const ctx = canvasState.ctx;
   ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
   canvasState.picture.draw(ctx);
